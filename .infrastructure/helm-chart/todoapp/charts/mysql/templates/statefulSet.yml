@@ -25,8 +25,6 @@ spec:
               name: {{ $.Chart.Name }}-secrets
               key: {{ $k }}
         {{- end }}
-        - name: MYSQL_DATABASE
-          value: app_db
         ports:
         - name: {{ .Chart.Name }}
           containerPort: 3306
@@ -40,6 +38,9 @@ spec:
           requests:
             cpu: {{ .Values.mysql.resources.requests.cpu }}
             memory: {{ .Values.mysql.resources.requests.memory }}
+          limits:
+            memory: {{ .Values.mysql.resources.limits.cpu }}
+            cpu: {{ .Values.mysql.resources.limits.memory }}
         livenessProbe:
           exec:
             command: ["mysqladmin", "ping"]
